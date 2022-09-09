@@ -55,3 +55,7 @@ C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\
 C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\Humanizer.dll
+C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\anton\OneDrive\Skrivbord\Skola\Webbapp_Mobilutv\Learnify\API\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
