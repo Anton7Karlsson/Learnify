@@ -9,7 +9,7 @@ namespace Entity.Specifications
         {
             IncludeMethod(x => x.Category);
         }
-
+//Test
         public CoursesWithCategoriesSpecification(Guid id) : base(x => x.Id == id)
         {
             IncludeMethod(c => c.Requirements);
