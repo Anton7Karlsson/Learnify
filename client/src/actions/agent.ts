@@ -18,12 +18,13 @@ const requests = {
     list: () => requests.get<PaginatedCourse>('/courses'),
   };
 
-  const Category = {
-    list: () => requests.get<Category[]>('/courses'),
+  const Categories = {
+    list: () => requests.get<Category[]>('/categories'),
   }
   
   const agent = {
     Courses,
+    Categories
   };
   
   export default agent;
