@@ -11,8 +11,8 @@ export interface Course {
     level: string;
     students: number;
     subTitle: string;
-    Learnings: Learning[] | [];
-    Requirements: Requirement[] | [];
+    learnings: Learning[] | [];
+    requirements: Requirement[] | [];
     lastUpdated: Date;
 }
 

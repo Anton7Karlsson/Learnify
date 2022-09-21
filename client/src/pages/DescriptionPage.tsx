@@ -110,7 +110,7 @@ const DescriptionsPage = () => {
                         $ 100
                     </span>
                     <span className="description-page__sidebar__box__price__real__discount">
-                    {course && `${100 - course!.price}% off`}
+                    {course && `${Math.floor(100 - course!.price)}% off`}
                     </span>
                 </div>
                 <div className="description-page__sidebar__box__learning">
@@ -119,11 +119,11 @@ const DescriptionsPage = () => {
                     </div>
                     <div className="description-page__sidebar__box__learning__content">
                         <ul className="description-page__sidebar__box__learning__content__list">
-                            {course?.Learnings.map((learning: Learning, index: number) => {
+                            {course?.learnings.map((learning: Learning, index: number) => {
                                 return(
                                     <li key={index} className="description-page__sidebar__box__learning__content__list__item">
                                         <span className="description-page__sidebar__box__learning__content__list__item__span">
-                                            &#1003;
+                                            &#10003;
                                         </span>
                                         {learning.name}
                                     </li>
@@ -146,11 +146,11 @@ const DescriptionsPage = () => {
                     </div>
                     <div className="description-page__sidebar__body__requirements__content">
                         <ul className="description-page__sidebar__body__requirements__content__list">
-                            {course?.Requirements.map((requirement: Requirement, index: number) => {
+                            {course?.requirements.map((requirement: Requirement, index: number) => {
                                 return(
                                     <li key={index} className="description-page__sidebar__body__requirements__content__list__item">
                                         <span className="description-page__sidebar__body__requirements__content__list__item__span">
-                                            &#1003;
+                                            &#10003;
                                         </span>
                                         {requirement.name}
                                     </li>
