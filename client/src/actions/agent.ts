@@ -9,6 +9,8 @@ axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
+axios.defaults.withCredentials = true;
+
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
     post: <T>(url: string, body: {}) => axios.post<T>(url, body).then(responseBody),
@@ -24,11 +26,19 @@ const requests = {
   const Categories = {
     list: () => requests.get<Category[]>('/categories'),
     getCategory: (id: number) => requests.get<Category>(`/categories/${id}`),
-  };
+  }; 
+
+  const Basket = {
+    get: () => requests.get("basket"),
+    addItem: (courseId: string) => requests.post(`basket?courseId=${courseId}`, {}),
+    removeItem: (courseId: string) => requests.del(`basket?courseId=${courseId}`),
+
+  }
   
   const agent = {
     Courses,
-    Categories
+    Categories,
+    Basket
   };
   
   export default agent;
