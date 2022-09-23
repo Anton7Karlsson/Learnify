@@ -3,7 +3,6 @@ import { Table } from "antd";
 import * as FaIcons from "react-icons/fa";
 import agent from "../actions/agent";
 import { Basket, CourseItem } from "../models/basket";
-import { Course } from "../models/course";
 
 const BasketPage = () => {
   const [items, setItems] = useState<Basket | null>();
@@ -21,6 +20,12 @@ const BasketPage = () => {
 
     setItems(items);
   };
+
+  const removeItem = (courseId: string) => {
+    agent.Baskets.removeItem(courseId).catch((error) => {
+      console.log(error);
+    });
+  }
 
   const columns = [
     {
@@ -49,8 +54,8 @@ const BasketPage = () => {
     {
       title: "Action",
       key: "action",
-      render: (item: Course) => (
-        <div>
+      render: (item: CourseItem) => (
+        <div onClick={() => removeItem(item.courseId)}>
             <FaIcons.FaTrash />
         </div>
       ),
