@@ -3,15 +3,15 @@ import { Table } from "antd";
 import * as FaIcons from "react-icons/fa";
 import agent from "../actions/agent";
 import { Basket, CourseItem } from "../models/basket";
+import { useStoreContext } from "../context/StoreContext";
 
 const BasketPage = () => {
   const [items, setItems] = useState<Basket | null>();
+  const {basket, removeItem} = useStoreContext();
 
   useEffect(() => {
-    agent.Baskets.get().then((response) => {
-      newData(response);
-    });
-  }, []);
+    newData(basket);
+  }, [basket]);
 
   const newData = (items: Basket | null) => {
     items?.items.map((item: CourseItem, index: number) => 
@@ -21,8 +21,10 @@ const BasketPage = () => {
     setItems(items);
   };
 
-  const removeItem = (courseId: string) => {
-    agent.Baskets.removeItem(courseId).catch((error) => {
+  const removeBasketItem = (courseId: string) => {
+    agent.Baskets.removeItem(courseId)
+    .then(() => removeItem(courseId))
+    .catch((error) => {
       console.log(error);
     });
   }
@@ -55,7 +57,7 @@ const BasketPage = () => {
       title: "Action",
       key: "action",
       render: (item: CourseItem) => (
-        <div onClick={() => removeItem(item.courseId)}>
+        <div onClick={() => removeBasketItem(item.courseId)}>
             <FaIcons.FaTrash />
         </div>
       ),
