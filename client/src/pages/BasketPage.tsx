@@ -2,17 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import * as FaIcons from "react-icons/fa";
 import agent from "../actions/agent";
-import { Basket } from "../models/basket";
+import { Basket, CourseItem } from "../models/basket";
 import { Course } from "../models/course";
 
 const BasketPage = () => {
-  const [items, setItems] = useState<Basket>();
+  const [items, setItems] = useState<Basket | null>();
 
   useEffect(() => {
     agent.Baskets.get().then((response) => {
-      setItems(response);
+      newData(response);
     });
   }, []);
+
+  const newData = (items: Basket | null) => {
+    items?.items.map((item: CourseItem, index: number) => 
+        Object.assign(item, {key: index})
+    );
+
+    setItems(items);
+  };
 
   const columns = [
     {
@@ -49,10 +57,6 @@ const BasketPage = () => {
     },
   ];
   
-
- 
-
-
   return (
     <div className="basket-page">
         <h1 className="basket-page__header">Shopping cart</h1>
