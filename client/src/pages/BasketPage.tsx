@@ -8,6 +8,7 @@ import { useStoreContext } from "../context/StoreContext";
 const BasketPage = () => {
   const [items, setItems] = useState<Basket | null>();
   const {basket, removeItem} = useStoreContext();
+  const basketCount = basket?.items.length;
 
   useEffect(() => {
     newData(basket);
@@ -67,6 +68,7 @@ const BasketPage = () => {
   return (
     <div className="basket-page">
         <h1 className="basket-page__header">Shopping cart</h1>
+        <h2 className="basket-page__header__sub-header">{`${basketCount} ${basketCount! > 1 ? "courses" : "course"} in the cart`}</h2>
         <Table columns={columns} dataSource={items?.items} />
     </div>
   )
