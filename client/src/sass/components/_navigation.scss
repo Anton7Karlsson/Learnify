@@ -7,7 +7,7 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 20px;
 
   &__left {
     display: flex;
@@ -27,7 +27,7 @@
 
     &__hamburger {
       display: none;
-      color: $color-grey-dark-2;
+      color: $color-grey-dark-1;
       font-size: 1em;
       margin-left: 20px;
       z-index: 100;
