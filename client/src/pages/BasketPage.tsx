@@ -50,14 +50,15 @@ const BasketPage = () => {
   ];
   
 
-  <Table columns={columns} dataSource={items?.items} />;
+ 
 
 
   return (
-    <>
-      <h1>{items?.clientId}</h1>
-    </>
-  );
+    <div className="basket-page">
+        <h1 className="basket-page__header">Shopping cart</h1>
+        <Table columns={columns} dataSource={items?.items} />
+    </div>
+  )
 };
 
 export default BasketPage;
