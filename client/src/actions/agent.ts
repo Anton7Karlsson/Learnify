@@ -3,11 +3,14 @@ import { PaginatedCourse } from "../models/paginatedCourse";
 import {Category} from "../models/category";
 import { request } from "http";
 import { Course } from "../models/course";
+import { Basket } from "../models/basket";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
+
+axios.defaults.withCredentials = true;
 
 const requests = {
     get: <T>(url: string) => axios.get<T>(url).then(responseBody),
@@ -24,11 +27,19 @@ const requests = {
   const Categories = {
     list: () => requests.get<Category[]>('/categories'),
     getCategory: (id: number) => requests.get<Category>(`/categories/${id}`),
-  };
+  }; 
+
+  const Baskets = {
+    get: () => requests.get<Basket>("basket"),
+    addItem: (courseId: string) => requests.post<Basket>(`basket?courseId=${courseId}`, {}),
+    removeItem: (courseId: string) => requests.del(`basket?courseId=${courseId}`),
+
+  }
   
   const agent = {
     Courses,
-    Categories
+    Categories,
+    Baskets,
   };
   
   export default agent;
