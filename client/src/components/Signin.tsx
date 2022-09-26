@@ -1,8 +1,10 @@
-import { Button, Card, Form, Input, Typography } from "antd";
+import { Button, Card, Form, Input, notification, Typography } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import agent from "../actions/agent";
+import { useDispatch } from "react-redux";
 import { Login } from "../models/user";
+import { signInUser } from "../redux/slice/userSlice";
+import { useAppDispatch } from "../redux/store/configureStore";
 
 interface Props{
     toggleRegister: () => void;
@@ -18,18 +20,32 @@ const Signin = ({toggleRegister} : Props) => {
     
     const {email, password} = values;
 
+    const dispatch = useAppDispatch();
+    const [form] = Form.useForm();
+
     const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setValues({...values, [name]: value})
     };
 
+    const resetForm = () => {
+        setValues({...values, email:"", password: ""})
+        form.resetFields();
+    };
+
     const submitUser = async (e: SyntheticEvent) => {
         e.preventDefault();
-        if(email.match( /^[^\s@]+@[^\s@]+\.[^\s@]+$/) && password.length >= 6) {
-          const response = await agent.Users.login(values)
-          setValues({...values, email: "", password: ""});
-          console.log(response);
-        }
+        try {
+            if (email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) && password.length >= 6) {
+              await dispatch(signInUser(values));
+            }
+            resetForm();
+          } catch (err: any) {
+            notification.error({
+              message: "Please check your email or password",
+            });
+            resetForm();
+          }
     }
 
     return(
@@ -46,7 +62,7 @@ const Signin = ({toggleRegister} : Props) => {
                 </Typography>
             </div>
             <Content className="log-in__form">
-                <Form name="login" labelCol={{span: 8}} wrapperCol={{span: 16}} autoComplete="off" onSubmitCapture={submitUser}>
+                <Form name="login" labelCol={{span: 8}} wrapperCol={{span: 16}} autoComplete="off" onSubmitCapture={submitUser} form={form}>
                    <Form.Item 
                         label="Email" 
                         name="email" 

@@ -4,7 +4,7 @@ import {Category} from "../models/category";
 import { request } from "http";
 import { Course } from "../models/course";
 import { Basket } from "../models/basket";
-import { Login, Register } from "../models/user";
+import { Login, Register, User } from "../models/user";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -23,8 +23,8 @@ const requests = {
   };
 
   const Users = {
-    login: (values: Login) => requests.post('users/login', values),
-    register: (values: Register) => requests.post('users/register', values),
+    login: (values: Login) => requests.post<User>('users/login', values),
+    register: (values: Register) => requests.post<User>('users/register', values),
   }
 
   const Courses = {
