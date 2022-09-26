@@ -3,6 +3,7 @@ import * as FaIcons from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/logo.png";
+import { removeBasket } from "../redux/slice/basketSlice";
 import { setCourseParams } from "../redux/slice/courseSlice";
 import { signOut } from "../redux/slice/userSlice";
 import { useAppSelector } from "../redux/store/configureStore";
@@ -15,8 +16,10 @@ const Navigation = () => {
   const {user} = useAppSelector((state) => state.user);
   const basketCount = basket?.items.length;
   const history = useHistory();
+
     const signout = () => {
         dispatch(signOut());
+        dispatch(removeBasket());
         history.push("/");
     };
   const showSidebar = () => setSidebar(!sidebar);
