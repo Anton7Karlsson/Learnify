@@ -9,29 +9,18 @@ import Category from "./components/Categories";
 import CategoryPage from "./pages/CategoryPage";
 import DescriptionsPage from "./pages/DescriptionPage";
 import BasketPage from "./pages/BasketPage";
-import agent from "./actions/agent";
 import { useAppDispatch } from "./redux/store/configureStore";
-import { setBasket } from "./redux/slice/basketSlice";
+import { fetchBasketAsync} from "./redux/slice/basketSlice";
+import Dashboard from "./pages/Dashboard";
+import { getUser } from "./redux/slice/userSlice";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
 
   const dispatch = useAppDispatch();
-
-  function getCookie(name: string) {
-    return (
-      document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || ''
-    );
-  }
-
+  dispatch(fetchBasketAsync());
   useEffect(() => {
-    const clientId = getCookie("clientId")
-    if(clientId){
-      agent.Baskets.get()
-      .then((response) => {
-        dispatch(setBasket(response));
-      })
-      .catch((error) => console.log(error));
-    }
+    dispatch(getUser());
   }, [dispatch]);
 
   return( 
@@ -45,6 +34,7 @@ function App() {
         <Route exact path="/course/:id" component={DescriptionsPage}/>
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/detail" component={DetailPage}/>
+        <PrivateRoute exact path="/profile" component={Dashboard} />
       </Switch>
     </> 
   );
