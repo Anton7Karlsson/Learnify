@@ -41,7 +41,7 @@ namespace Infrastructure.Services
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512);
 
-            var tokenOpions = new JwtSecurityToken(
+            var tokenOptions = new JwtSecurityToken(
                 issuer: null,
                 audience: null,
                 claims: claims,
