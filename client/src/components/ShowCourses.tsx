@@ -3,8 +3,8 @@ import * as FaIcons from "react-icons/fa";
 import { Card, Col } from "antd";
 import { Course } from "../models/course";
 import { Link } from "react-router-dom";
-import agent from "../actions/agent";
-import { useStoreContext } from "../context/StoreContext";
+import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
+import { addBasketItemAsync} from "../redux/slice/basketSlice";
 
 interface Props {
   course: Course;
@@ -13,7 +13,8 @@ interface Props {
 const ShowCourses = ({ course }: Props) => {
   const [spanVal, setSpanVal] = useState<number>();
 
-  const {setBasket, basket} = useStoreContext();
+  const {basket} = useAppSelector(state => state.basket)
+  const dispatch = useAppDispatch()
 
   const checkWidth = (): void => {
     if (window.innerWidth > 1024) {
@@ -45,11 +46,6 @@ const ShowCourses = ({ course }: Props) => {
     return options;
   };
 
-  const addToCart = (courseId: string) => {
-    agent.Baskets.addItem(courseId)
-    .then((response) => setBasket(response))
-    .catch((error) => console.log(error));
-  }
 
   return (
     <>
@@ -72,7 +68,7 @@ const ShowCourses = ({ course }: Props) => {
               <Link to="/basket">
                 <div className="course__bottom__cart">Go to cart</div>
               </Link> ) : (
-                <div onClick={() => addToCart(course.id)} className="course__bottom__cart">
+                <div onClick={() => dispatch(addBasketItemAsync({courseId: course.id}))} className="course__bottom__cart">
                   Add to cart
                 </div>
               )}
