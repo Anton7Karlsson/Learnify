@@ -9,19 +9,19 @@ namespace Infrastructure.Services
 {
     public class PaymentService
     {
-        private readonly IConfiguration _configuration;
-        public PaymentService(IConfiguration configuration)
+        private readonly IConfiguration _config;
+        public PaymentService(IConfiguration config)
         {
-            _configuration = configuration;
+            _config = config;
 
         }
 
         public async Task<PaymentIntent> PaymentIntentAsync(Basket basket)
         {
-            StripeConfiguration.ApiKey = _configuration["Stripe:ClientSecret"];
+            StripeConfiguration.ApiKey = _config["Stripe:ClientSecret"];
             var service = new PaymentIntentService();
             var intent = new PaymentIntent();
-            var total = basket.Items.Sum(items => items.Course.Price);
+            var total = basket.Items.Sum(item => item.Course.Price);
             long updatedTotal = (long) (total * 100);
 
             if(string.IsNullOrEmpty(basket.PaymentIntentId))
