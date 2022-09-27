@@ -4,6 +4,7 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { removeBasket } from "../redux/slice/basketSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/configureStore";
+import agent from '../actions/agent'
 import CheckoutSummary from "./CheckoutSummary";
 
 const Checkout = () => {
