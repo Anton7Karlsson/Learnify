@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {Route, Switch} from 'react-router-dom';
 import Navigation from "./components/Navigation";
 import DetailPage from "./pages/DetailPage";
@@ -12,16 +12,28 @@ import BasketPage from "./pages/BasketPage";
 import { useAppDispatch } from "./redux/store/configureStore";
 import { fetchBasketAsync} from "./redux/slice/basketSlice";
 import Dashboard from "./pages/Dashboard";
-import { getUser } from "./redux/slice/userSlice";
+import { fetchCurrentUser } from "./redux/slice/userSlice";
 import PrivateRoute from "./components/PrivateRoute";
+import CheckoutPage from "./pages/CheckoutPage";
+import Loading from "./components/Loading";
 
 function App() {
-
+  const [loading, setLoading] = useState(true)
   const dispatch = useAppDispatch();
-  dispatch(fetchBasketAsync());
-  useEffect(() => {
-    dispatch(getUser());
+  const appInit = useCallback(async () => {
+    try{
+      await dispatch(fetchBasketAsync());
+      await dispatch(fetchCurrentUser());
+     }catch(error:any) {
+       console.log(error)
+     } 
   }, [dispatch]);
+
+  useEffect(() => {
+    appInit().then(() => setLoading(false))
+  }, [appInit]);
+
+  if(loading) return <Loading/>
 
   return( 
     <> 
@@ -35,6 +47,7 @@ function App() {
         <Route exact path="/login" component={LoginPage}/>
         <Route exact path="/detail" component={DetailPage}/>
         <PrivateRoute exact path="/profile" component={Dashboard} />
+        <PrivateRoute exact path="/checkout" component={CheckoutPage} />
       </Switch>
     </> 
   );
