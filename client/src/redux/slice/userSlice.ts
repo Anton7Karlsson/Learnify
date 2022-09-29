@@ -12,7 +12,7 @@ interface UserState {
 
 const initialState: UserState = {
   user: null,
-  userCourses: []
+  userCourses: [],
 };
 
 export const fetchCurrentUser = createAsyncThunk<User>(
@@ -20,7 +20,7 @@ export const fetchCurrentUser = createAsyncThunk<User>(
   async (_, thunkAPI) => {
     thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user")!)));
     try{
-      const userDto = await agent.Users.currentUser()
+      const userDto = await agent.Users.currentUser();
       const {basket, courses, ...user} = userDto;
       if(basket) thunkAPI.dispatch(setBasket(basket));
       if(courses) thunkAPI.dispatch(setUserCourses(courses));
@@ -33,17 +33,18 @@ export const fetchCurrentUser = createAsyncThunk<User>(
   {
     condition: () => {
       if(!localStorage.getItem("user")) return false;
-    }
+    },
   }
-)
+);
 
 export const signInUser = createAsyncThunk<User, Login>(
   "user/signin",
   async (data, thunkAPI) => {
     try {
       const userData = await agent.Users.login(data);
-      const {basket, ...user} = userData;
+      const {basket, courses, ...user} = userData;
       if(basket) thunkAPI.dispatch(setBasket(basket));
+      if (courses) thunkAPI.dispatch(setUserCourses(courses));
       localStorage.setItem("user", JSON.stringify(user));
       return user;
     } catch (err: any) {

@@ -3,14 +3,16 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220928120750_LecturesTableAdded")]
+    partial class LecturesTableAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,9 +280,6 @@ namespace Infrastructure.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("CurrentLecture")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("UserId", "CourseId");
 
                     b.HasIndex("CourseId");
@@ -316,15 +315,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d72fb114-ae72-4765-8930-fc09ab7af875",
-                            ConcurrencyStamp = "0d109794-3570-4acd-a089-4247ecf33ab6",
+                            Id = "69a7dec1-a086-4d44-9900-87a1fd5008a6",
+                            ConcurrencyStamp = "9720b3c5-20e8-4a10-a395-ce9bf3cb241f",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "1555a847-4ccc-413f-8d47-7940fc5ae33a",
-                            ConcurrencyStamp = "f32b18cb-1674-4500-8b7d-4329347db268",
+                            Id = "adbad5aa-4227-4085-92b4-29dd12a98b2f",
+                            ConcurrencyStamp = "5e74093a-c392-4015-bdea-9b988d97f6b2",
                             Name = "Instructor",
                             NormalizedName = "INSTRUCTOR"
                         });

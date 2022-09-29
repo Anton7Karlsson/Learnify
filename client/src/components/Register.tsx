@@ -49,9 +49,14 @@ const RegisterComponent = ({toggleRegister} : Props) => {
             }
             resetForm();
         } catch (err: any){
-            notification.error({
-                message: "Please check your credentials",
-              });
+            if(err.error){
+                for(const val of err.error){
+                    notification.error({
+                        message: val
+                    })
+                }
+
+            }
               resetForm();
         }
     }

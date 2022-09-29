@@ -20,6 +20,12 @@ namespace API.Helpers
             CreateMap<Category, CategoryDto>();
             
             CreateMap<Basket, BasketDto>();
+
+            CreateMap<Lecture, LectureDto>();
+
+            CreateMap<Section, SectionDto>()
+            .ForMember(s => s.SectionName, o => o.MapFrom(c => c.Name));
+
             CreateMap<BasketItem, BasketItemDto>()
             .ForMember(b => b.CourseId, o => o.MapFrom(c => c.CourseId))
             .ForMember(b => b.Title, o => o.MapFrom(c => c.Course.Title))
