@@ -5,7 +5,8 @@ export interface User {
     email: string;
     token: string;
     basket?: Basket;
-    courses?: Course[]
+    courses?: Course[];
+    roles?: string[];
   }
 export interface Login{
     email: string;
