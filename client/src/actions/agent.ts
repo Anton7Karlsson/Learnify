@@ -93,6 +93,7 @@ const requests = {
     list: (params?: URLSearchParams) => requests.get<PaginatedCourse>("/courses", params),
     getById: (id: string) => requests.get<Course>(`/courses/${id}`),
     create: (data: RegisterCourse) => requests.post < string > ('courses', data),
+    publish: (courseId: string) => requests.post < string > (`courses/publish/${courseId}`, {}),
   };
 
   const Categories = {
@@ -113,7 +114,8 @@ const requests = {
 
   const Lectures  = {
     getLectures: (courseId: string) => requests.get<Lecture>(`lectures/${courseId}`),
-    setCurrentLecture: (values: {lectureId: number, courseId: string}) => requests.put('lectures/setCurrentLecture', values)
+    setCurrentLecture: (values: {lectureId: number, courseId: string}) => requests.put('lectures/setCurrentLecture', values),
+    create: (data: {courseId: string, sectionName: string, lectures: LectureDto[] }) => requests.post < string > ('lectures', data),
   };
   
   const agent = {
