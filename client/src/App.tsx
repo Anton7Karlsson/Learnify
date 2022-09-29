@@ -17,6 +17,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CheckoutPage from "./pages/CheckoutPage";
 import Loading from "./components/Loading";
 import CoursePage from "./pages/CoursePage";
+import InstructorPage from "./pages/InstructorPage";
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -50,6 +51,7 @@ function App() {
         <PrivateRoute exact path="/profile" component={Dashboard} />
         <PrivateRoute exact path="/learn/:course/:lecture" component={CoursePage} />
         <PrivateRoute exact path="/checkout" component={CheckoutPage} />
+        <PrivateRoute exact path="/instructor" component={InstructorPage} />
       </Switch>
     </> 
   );
