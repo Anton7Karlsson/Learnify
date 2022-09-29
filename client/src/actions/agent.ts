@@ -1,12 +1,12 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { PaginatedCourse } from "../models/paginatedCourse";
 import {Category} from "../models/category";
-import { request } from "http";
 import { Course } from "../models/course";
 import { Basket } from "../models/basket";
 import { Login, Register, User } from "../models/user";
 import { Store } from "redux";
-import { Lecture } from "../models/lecture";
+import { Lecture, LectureDto } from "../models/lecture";
+import { notification } from "antd";
 
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
@@ -20,8 +20,56 @@ export const axiosInterceptor = (store: Store) => {
     const token = store.getState().user.user?.token;
     if (token) config.headers!.Authorization = `Bearer ${token}` 
     return config;
-  })
-}
+  });
+};
+
+axios.interceptors.response.use((response) => {
+  return response;
+},
+(error: AxiosError) => {
+  const { data, status }: AxiosResponse = error.response!;
+  switch (status) {
+    case 400:
+      if (data.errors) {
+        const validationErrors: string[] = [];
+        for (const key in data.errors) {
+          if (data.errors[key]) {
+            validationErrors.push(data.errors[key]);
+          }
+        }
+        throw validationErrors.flat();
+      }
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 401:
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 403:
+      notification.error({
+        message: 'You are not allowed to do that!',
+      });
+      break;
+    case 404:
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 500:
+      notification.error({
+        message: 'Server error, try again later',
+      });
+      break;
+    default:
+      break;
+  }
+  return Promise.reject(error.response);
+},
+);
+
 
 const requests = {
     get: <T>(url: string, params?: URLSearchParams) =>
