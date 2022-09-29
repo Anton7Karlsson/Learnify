@@ -7,12 +7,14 @@ import { setBasket } from "./basketSlice";
 
 interface UserState {
   user: User | null;
-  userCourses: Course[]
+  userCourses: Course[];
+  unpublishedCourses: Course[];
 }
 
 const initialState: UserState = {
   user: null,
   userCourses: [],
+  unpublishedCourses: [],
 };
 
 export const fetchCurrentUser = createAsyncThunk<User>(
@@ -75,7 +77,18 @@ export const addRole = createAsyncThunk<void>(
       return thunkAPI.rejectWithValue({ error: err })
     }
   },
-)
+);
+
+export const getUnpublishedCourses = createAsyncThunk<Course[]>(
+  'user/getUnpublishedCourses',
+  async (_, thunkAPI) => {
+    try {
+     return await agent.Users.unpublishedCourses();
+    } catch (err: any) {
+      return thunkAPI.rejectWithValue({ error: err });
+    }
+  },
+);
 
 export const userSlice = createSlice({
   name: "user",
@@ -106,6 +119,9 @@ export const userSlice = createSlice({
         message: "Session has been expired"
       });
     });
+    builder.addCase(getUnpublishedCourses.fulfilled, (state, action) => {
+      state.unpublishedCourses = action.payload
+     });
     builder.addMatcher(
       isAnyOf(signInUser.fulfilled, registerUser.fulfilled, fetchCurrentUser.fulfilled),
       (state, action) => {
