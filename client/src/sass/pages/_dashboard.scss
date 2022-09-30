@@ -3,12 +3,12 @@
     flex-direction: column;
   
     &__header {
-      background: $color-primary;
+      background: #00837a; //$color-primary;
       height: 100px;
       display: flex;
       align-items: center;
       padding: 30px;
-      justify-content: space-between;
+      text-align: center;
 
       @media only screen and (max-width: $bp-medium) {
         flex-direction: column;
