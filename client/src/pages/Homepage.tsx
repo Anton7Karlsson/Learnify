@@ -74,7 +74,7 @@ const Homepage = () => {
           <Row gutter={[24, 32]}>
             {data &&
               data.map((course: Course, index: number) => {
-                return <ShowCourses key={index} course={course} />;
+                return <ShowCourses key={index} course={course} />
               })}
           </Row>
           <div className="pagination">

@@ -80,7 +80,7 @@ const ShowCourses = ({ course }: Props) => {
                     <div onClick={() => dispatch(addBasketItemAsync({courseId: course.id}))} className="course__bottom__cart">
                       Add to cart
                     </div>
-              )};
+              )}
             </div>
           </Card>
       </Col>
